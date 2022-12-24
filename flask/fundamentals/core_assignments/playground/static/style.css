@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.title {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    height: 200px;
+    width: 200px;
+    border: 2px solid black;
+    background: blue;
+    margin: 20px;
+}
