@@ -17,7 +17,9 @@ body {
 
 .flex-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 10px;
     align-items: center;
 }
 
@@ -25,6 +27,6 @@ body {
     height: 200px;
     width: 200px;
     border: 2px solid black;
-    background: blue;
-    margin: 20px;
+    /* background: blue;
+    margin: 20px; */
 }

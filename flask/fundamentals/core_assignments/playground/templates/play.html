@@ -12,9 +12,11 @@
         <h1>Welcome!</h1>
     </div>
     <div class="flex-container">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
+        {% for i in range(0,num) %}
+        <div class="box" style="background-color: {{color}};"></div>
+        {% endfor %}
+        <!-- <div class="box"></div>
+        <div class="box"></div> -->
     </div>
 </body>
 </html>
