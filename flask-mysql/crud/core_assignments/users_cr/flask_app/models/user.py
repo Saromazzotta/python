@@ -1,4 +1,4 @@
-from mysqlconnection import connectToMySQL
+from flask_app.config.mysqlconnection import connectToMySQL
 
 class User:
     def __init__(self, data):
@@ -21,6 +21,15 @@ class User:
         for user in results:
             users.append(cls(user))
         return users
+
+    @classmethod
+    def get_one(cls):
+        query = """
+        SELECT * FROM users WHERE id = %(user_id)s
+        """
+
+        results = connectToMySQL('users_schema').query_db(query)
+
 
     @classmethod
     def save(cls, data):
