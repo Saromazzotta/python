@@ -25,10 +25,10 @@ def create_user():
     data = {
         "fname": request.form["fname"],
         "lname": request.form["lname"],
-        "email": request.form["email"],
+        "email": request.form["email"]
     }
-    User.save(data)
-    return redirect('/read')
+    user_id=User.save(data)
+    return redirect(f'/user/show/{user_id}')
 
 
 @app.route('/user/show/<int:user_id>')

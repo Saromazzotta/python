@@ -10,9 +10,9 @@
     <h1>User {{ user.id }}</h1>
     <a href="/read">Home</a>
     <ul>
-        <li>Full Name: {{ user.full_name }} </li>
+        <li>Full Name: {{ user.first_name + " " + user.last_name }} </li>
         <li>Email: {{ user.email }}</li>
-        <li>Created On: {{ user.created_at  }}</li>
+        <li>Created On: {{ user.created_at }}</li>
     </ul>
     <a href="/user/{{user.id}}/edit">Edit</a>
     <a href="">Delete</a>
