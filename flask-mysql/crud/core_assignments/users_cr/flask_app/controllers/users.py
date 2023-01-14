@@ -41,5 +41,28 @@ def user_show(user_id):
 
 @app.route('/user/<int:user_id>/edit')
 def user_edit(user_id):
-    return render_template("edit.html", user=User.get_one(user_id))
+    data = {
+        "id": user_id
+    }
+    return render_template("edit.html", user=User.get_one(data))
+
+@app.route('/user/<int:user_id>/update', methods=['POST'])
+def user_update(user_id):
+    data = {
+        "id": user_id,
+        "first_name": request.form['first_name'],
+        "last_name": request.form['last_name'],
+        "email": request.form['email']
+    }
+    User.update(data)
+    return redirect(f'/user/show/{user_id}')
+
+
+@app.route('/user/<int:user_id>/delete')
+def user_delete(user_id):
+    data = {
+        "id": user_id
+    }
+    User.delete(data)
+    return redirect('/read')
 
