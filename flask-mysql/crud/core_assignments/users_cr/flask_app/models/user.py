@@ -23,12 +23,21 @@ class User:
         return users
 
     @classmethod
-    def get_one(cls):
+    def get_one(cls, data):
         query = """
-        SELECT * FROM users WHERE id = %(user_id)s
+        SELECT 
+            *
+        FROM 
+            users 
+
+        WHERE 
+            id = %(id)s;
         """
 
-        results = connectToMySQL('users_schema').query_db(query)
+        results = connectToMySQL('users_schema').query_db(query,data)
+
+        return cls(results[0]) if results else None
+
 
 
     @classmethod

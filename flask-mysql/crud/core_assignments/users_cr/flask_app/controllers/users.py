@@ -12,7 +12,6 @@ def home():
 @app.route('/read')
 def read_all():
     users = User.get_all()
-    print(users)
     return render_template("read.html", users=users)
 
 
@@ -35,6 +34,12 @@ def create_user():
 @app.route('/user/show/<int:user_id>')
 def user_show(user_id):
     data = {
-        "id": id
+        "id": user_id
     }
     return render_template("users_show.html", user=User.get_one(data))
+
+
+@app.route('/user/<int:user_id>/edit')
+def user_edit(user_id):
+    return render_template("edit.html", user=User.get_one(user_id))
+
