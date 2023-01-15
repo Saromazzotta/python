@@ -11,10 +11,17 @@ def dojos():
     dojos = Dojo.get_all()
     return render_template("dojo.html", dojos=dojos)
 
-@app.route('/dojos/new', methods=['POST'])
+@app.route('/dojos/new/', methods=['POST'])
 def add_dojo():
     data = {
         "name" : request.form['name']
     }
     Dojo.save(data)
     return redirect('/dojos')
+
+@app.route('/dojos/<int:dojo_id>')
+def ninja_show(dojo_id):
+    data = {
+        "id" : dojo_id
+    }
+    return render_template("show.html", dojo_ninjas=Dojo.get_dojo_with_ninjas(data))

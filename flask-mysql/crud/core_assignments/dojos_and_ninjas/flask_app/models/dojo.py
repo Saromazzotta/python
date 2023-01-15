@@ -47,15 +47,17 @@ class Dojo:
             dojos.id = %(id)s;
         """
         results = connectToMySQL('dojos_and_ninjas_schema').query_db(query, data)
-        dojo = cls(results[0])
+        print("results", results)
+        dojo = cls(results[0]) if results else None
         for row_from_db in results:
             ninja_data = {
                 "id" : row_from_db['ninjas.id'],
-                "first_name" : row_from_db['ninjas.first_name'],
-                "last_name" : row_from_db['ninjas.last_name'],
-                "age" : row_from_db['ninjas.age'],
+                "first_name" : row_from_db['first_name'],
+                "last_name" : row_from_db['last_name'],
+                "age" : row_from_db['age'],
                 "created_at" : row_from_db['ninjas.created_at'],
-                "updated_at" : row_from_db['ninjas.updated_at']
+                "updated_at" : row_from_db['ninjas.updated_at'],
+                "dojo_id" : row_from_db['dojo_id']
             }
             dojo.ninjas.append(ninja.Ninja(ninja_data))
         return dojo
