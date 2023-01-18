@@ -3,7 +3,7 @@ from flask import render_template, redirect, request
 from flask_app.models.dojo import Dojo
 
 @app.route('/')
-def home():
+def index():
     return redirect('/dojos')
 
 @app.route('/dojos')
@@ -24,4 +24,8 @@ def ninja_show(dojo_id):
     data = {
         "id" : dojo_id
     }
-    return render_template("show.html", dojo_ninjas=Dojo.get_dojo_with_ninjas(data))
+    return render_template("show.html", dojo=Dojo.get_dojo_with_ninjas(data))
+
+@app.route('/ninjas')
+def ninjas():
+    return render_template("ninjas.html")

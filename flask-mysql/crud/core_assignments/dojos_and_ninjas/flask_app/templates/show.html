@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>{{ dojo_ninjas.name }} Ninjas</h1>
+        <h1>{{ dojo.name }} Ninjas</h1>
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -21,11 +21,10 @@
             </thead>
             <tbody>
                 <tr>
-                    {% for ninjas in dojo %}
-                    <td scope="row">{{ dojo_ninjas.first_name }}</td>
-                    <td scope="row">{{ dojo_ninjas.last_name }}</td>
-                    <td scope="row">{{ dojo_ninjas.age }}</td>
+                    {% for ninja in dojo.ninjas %}
+                        <td>{{ ninja.first_name }}</td>
                     {% endfor %}
+                    
                 </tr>
             </tbody>
         </table>
