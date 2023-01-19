@@ -23,9 +23,10 @@
                 <tr>
                     {% for ninja in dojo.ninjas %}
                         <td>{{ ninja.first_name }}</td>
-                    {% endfor %}
-                    
+                        <td>{{ ninja.last_name }}</td>
+                        <td>{{ ninja.age }}</td>
                 </tr>
+                    {% endfor %}
             </tbody>
         </table>
         <a href="/dojos">Home</a>
