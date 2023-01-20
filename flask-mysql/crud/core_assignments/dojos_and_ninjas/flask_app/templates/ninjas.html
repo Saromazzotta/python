@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="div">
-        <form action="" method="post">
+        <form action="/ninja/add" method="post">
         <h2>New Ninja</h2>
-        <label for="">Dojo</label>
-        <select name="dojo_id" id="">
-        {% for dojo in all_dojos %}
+        <label for="dojos">Dojo</label>
+        <select name="dojo_id">
+        {% for dojo in dojos %}
         <option value="{{ dojo.id }}">{{ dojo.name }}</option>
         {% endfor %}
         </select>
