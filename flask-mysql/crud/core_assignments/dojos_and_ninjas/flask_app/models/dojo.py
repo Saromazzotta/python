@@ -47,7 +47,7 @@ class Dojo:
             dojos.id = %(id)s;
         """
         results = connectToMySQL('dojos_and_ninjas_schema').query_db(query, data)
-        print("results", results)
+        # print("results", results)
         dojo = cls(results[0]) if results else None
         for row_from_db in results:
             ninja_data = {
@@ -62,3 +62,4 @@ class Dojo:
             dojo.ninjas.append(ninja.Ninja(ninja_data))
         # print (dojo.ninjas)
         return dojo
+    

@@ -18,3 +18,37 @@ class Ninja:
         VALUES (%(first_name)s, %(last_name)s, %(age)s, %(dojo_id)s)
         """
         return connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
+    
+    @classmethod
+    def delete(cls, data):
+        query = """
+        DELETE FROM ninjas WHERE id = %(id)s;
+        """
+
+        return connectToMySQL('dojos_and_ninjas_schema').query_db(query, data)
+
+    @classmethod
+    def update(cls, data):
+        query = """
+        UPDATE ninjas
+        SET first_name=%(first_name)s, last_name=%(last_name)s, age=%(age)s
+        WHERE id = %(id)s;
+        """
+
+        return connectToMySQL('dojos_and_ninjas_schema').query_db(query, data)
+
+    @classmethod
+    def get_one(cls, data):
+        query = """
+        SELECT 
+            *
+        FROM 
+            ninjas
+
+        WHERE 
+            id = %(id)s;
+        """
+
+        results = connectToMySQL('dojos_and_ninjas_schema').query_db(query, data)
+
+        return cls(results[0]) if results else None
