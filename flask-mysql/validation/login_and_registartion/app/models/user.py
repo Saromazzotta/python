@@ -59,7 +59,7 @@ class User:
     
 
     @classmethod
-    def get_by_email(cls, email):
+    def get_by_email(cls, data):
         query = """
         SELECT 
             *
@@ -70,6 +70,6 @@ class User:
             email = %(email)s
         """
 
-        result = connectToMySQL('users').query_db(query, {'email': email})
+        result = connectToMySQL('users').query_db(query, data)
 
         return cls(result[0]) if result else None

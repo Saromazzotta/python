@@ -38,42 +38,48 @@ def register():
     user_id = User.save(data)
     # store user id into session
     session['user_id'] = user_id
-    return redirect("/success")
+    return redirect("/dashboard")
 
 
-@app.route('/success')
+@app.route('/dashboard')
 def dashboard():
-    return render_template("success.html")
+
+
+    if 'user_id' not in session: 
+        return redirect("/")
+    return render_template("dashboard.html")
 
 
 @app.route('/login', methods=['POST'])
 def login():
 
-    user = User.get_by_email(request.form['email'])
+    # user_in_db = User.get_by_email(request.form['email'])
 
-    if not user or not bcrypt.check_password_hash(user.password, request.form['password']): # hashed password first, password to be checked
-        flash("Invalid Credentials", "login")
-        return redirect('/')
-
-    # data = {"email": request.form["email"]}
-    # user_in_db = User.get_by_email(data)
-    # # user is not registered in the db
-    # if not user_in_db:
-    #     flash("Invalid Email/Password")
-    #     return redirect("/")
-    # if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
-    #     # if we get False after checking the password
-    #     flash("Invalid Email/Password")
+    # if not user or not bcrypt.check_password_hash(user.password, request.form['password']): # hashed password first, password to be checked
+    #     flash("Invalid Credentials", "login")
     #     return redirect('/')
-    # # if the passwords matched, we set the user_id into session
-    # session['user_id'] = user_in_db.id
-    # # never render on a post!!!
-    return redirect("/success")
+
+    data = {"email": request.form["email"]}
+    user_in_db = User.get_by_email(data)
+
+    # user is not registered in the db
+    if not user_in_db:
+        flash("Invalid Email/Password")
+        return redirect("/")
+    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
+        # if we get False after checking the password
+        flash("Invalid Email/Password")
+        return redirect('/')
+    
+    # if the passwords matched, we set the user_id into session
+    session['user_id'] = user_in_db.id
+    # never render on a post!!!
+    return redirect("/dashboard")
 
 
 @app.route('/logout')
 def logout():
-    session.pop()
+    session.clear()
     return redirect("/")
 
 
