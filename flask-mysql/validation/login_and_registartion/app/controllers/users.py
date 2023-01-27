@@ -9,14 +9,13 @@ from flask import render_template, redirect, request, session, flash
 def index():
     return render_template("index.html")
 
+
 @app.route('/register', methods=['POST'])
 def register():
-    #if there are errors:
-    #We call the staticmethod on model to validate
+    
     if not User.validate_registration(request.form):
-        #redirect to the route where the form is rendered.
         return redirect('/')
-    #else no errors:
+
 
     # validate the form here ...
     # create the hash
@@ -63,9 +62,9 @@ def login():
     return redirect("/success")
 
 
-
 @app.route('/logout')
 def logout():
+    session.pop()
     return redirect("/")
 
 

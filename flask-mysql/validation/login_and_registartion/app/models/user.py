@@ -20,31 +20,35 @@ class User:
     @staticmethod
     def validate_registration(user):
         is_valid = True # we assume this is true
-        if len(user['first_name']) < 2:
-            flash("First name must be at least 2 characters.")
+
+        if User.get_by_email(user['email']):
+            flash("Email already taken", "register")
             is_valid = False
-        if len(user['last_name']) < 2:
-            flash("Last name must be at least 2 characters.")
-            is_valid = False
-        if len(user['email']) < 3:
-            flash("Email must be at least 3 characters.")
-            is_valid = False
-        if len(user['password']) < 8:
-            flash("Password must be at least 8 characters.")
-            is_valid = False
-        if len(user['password']) != len(user['confirm_password']):
-            flash("Passwords must match.")
-            is_valid = False
-        return is_valid
-    
-    @staticmethod
-    def validate_user(user):
-        is_valid = True
-        # test whether a field matches the pattern
+
         if not EMAIL_REGEX.match(user['email']):
             flash("Invalid email address!")
             is_valid = False
+
+        if len(user['password']) < 8:
+            flash("Password must be at least 8 characters.")
+            is_valid = False
+
+        if user['password'] != user['confirm_password']:
+            flash("Passwords must match.")
+            is_valid = False
+            
+        if len(user['first_name']) == 0:
+            flash("Enter a first name", "register")
+            is_valid = False
+
+        if len(user['last_name']) == 0:
+            flash("Enter a last name", "register")
+            is_valid = False
+
+
+
         return is_valid
+
     
     @classmethod
     def save(cls,data):
@@ -56,7 +60,7 @@ class User:
     
 
     @classmethod
-    def get_by_email(cls, data):
+    def get_by_email(cls, email):
         query = """
         SELECT 
             *
@@ -64,11 +68,9 @@ class User:
             users
 
         WHERE 
-            email = %(emails)s;
+            email = %(emails)s
         """
 
-        result = connectToMySQL('users').query_db(query, data)
+        result = connectToMySQL('users').query_db(query, {'email': email})
 
-        if len(result) < 1:
-            return False
-        return cls(result[0])
+        return cls(result[0]) if result else None
