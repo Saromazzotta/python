@@ -13,7 +13,6 @@ class User:
         self.last_name = data['last_name']
         self.email = data['email']
         self.password = data['password']
-        self.password = data['confirm_password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
@@ -49,12 +48,12 @@ class User:
 
         return is_valid
 
-    
+
     @classmethod
     def save(cls,data):
         query = """
-        INSERT INTO users (first_name, last_name, email, password, confirm_password)
-        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, %(confirm_password)s)
+        INSERT INTO users (first_name, last_name, email, password)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s)
         """
         return connectToMySQL('users').query_db(query,data)
     
@@ -68,7 +67,7 @@ class User:
             users
 
         WHERE 
-            email = %(emails)s
+            email = %(email)s
         """
 
         result = connectToMySQL('users').query_db(query, {'email': email})
