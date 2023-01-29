@@ -17,8 +17,8 @@ class Recipe:
     @classmethod
     def save(cls, data):
         query = """
-        INSERT INTO recipes (name, description, instructions, date_made, under_30)
-        VALUES (%(name)s, %(description)s, %(instructions)s, %(date_made)s, %(under_30)s)
+        INSERT INTO recipes (name, description, instructions, date_made, under_30, user_id)
+        VALUES (%(name)s, %(description)s, %(instructions)s, %(date_made)s, %(under_30)s, %(user_id)s)
         """
         return connectToMySQL('recipes').query_db(query, data)
 
