@@ -69,3 +69,5 @@ def login():
 def logout():
     session.clear()
     return redirect("/")
+
+
