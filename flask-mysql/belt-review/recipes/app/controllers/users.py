@@ -42,7 +42,9 @@ def dashboard():
     data = {
         "id": session['user_id']
     }
-    return render_template("show_recipes.html", user=User.get_one(data))
+
+    all_recipes = Recipe.get_all()
+    return render_template("show_recipes.html", user=User.get_one(data), recipes=all_recipes)
 
 
 @app.route('/login', methods=['POST'])

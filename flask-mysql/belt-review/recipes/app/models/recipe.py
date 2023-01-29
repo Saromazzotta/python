@@ -65,7 +65,7 @@ class Recipe:
         recipes = []
 
         for recipe in results:
-            recipe.append(cls(recipe))
+            recipes.append(cls(recipe))
         return recipes
 
     @staticmethod

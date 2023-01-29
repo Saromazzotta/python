@@ -33,10 +33,10 @@
             </thead>
             <tbody>
                 <tr>
-                    {% for user in users %}
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    {% for recipe in recipes %}
+                        <td>{{ recipe.name }}</td>
+                        <td>{{ recipe.under_30 }}</td>
+                        <td>{{ recipe.session }}</td>
                         <td>
                             <a href="">edit</a>
                             <a href="">delete</a>
