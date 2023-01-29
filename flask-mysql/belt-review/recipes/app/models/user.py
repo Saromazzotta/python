@@ -58,6 +58,24 @@ class User:
         return connectToMySQL('recipes').query_db(query, data)
 
     @classmethod
+    def update(cls, data):
+        query = """
+        UPDATE users
+        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s
+        WHERE id = %(id)s;
+        """
+
+        return connectToMySQL('recipes').query_db(query, data)
+
+    @classmethod
+    def delete(cls, data):
+        query = """
+        DELETE FROM users WHERE id = %(id)s;
+        """
+
+        return connectToMySQL('recipes').query_db(query, data)
+
+    @classmethod
     def get_by_email(cls, data):
         query = """
         SELECT 
@@ -72,3 +90,31 @@ class User:
         result = connectToMySQL('recipes').query_db(query, data)
 
         return cls(result[0]) if result else None
+
+    @classmethod
+    def get_one(cls, data):
+        query = """
+        SELECT 
+            *
+        FROM 
+            users 
+
+        WHERE 
+            id = %(id)s;
+        """
+
+        results = connectToMySQL('recipes').query_db(query, data)
+
+        return cls(results[0]) if results else None
+
+    @classmethod
+    def get_all(cls):
+        query = "SELECT * FROM users;"
+
+        results = connectToMySQL('recipes').query_db(query)
+
+        users = []
+
+        for user in results:
+            users.append(cls(user))
+        return users
