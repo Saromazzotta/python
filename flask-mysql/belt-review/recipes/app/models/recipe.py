@@ -1,13 +1,5 @@
 from app import app
 from app.config.mysqlconnection import connectToMySQL
-from flask import flash
-import re
-from flask_bcrypt import Bcrypt
-# we are creating an object called bcrypt, which is made by invoking the function Bcrypt with our app as an argument
-bcrypt = Bcrypt(app)
-
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-
 
 class Recipe:
     def __init__(self, data):
