@@ -14,6 +14,8 @@ class Recipe:
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
 
+        self.posted_by = None
+
     @classmethod
     def save(cls, data):
         query = """

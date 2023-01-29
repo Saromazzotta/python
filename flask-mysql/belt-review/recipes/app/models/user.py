@@ -19,6 +19,8 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
+        self.recipes = []
+
     @staticmethod
     def validate_registration(user):
         is_valid = True  # we assume this is true

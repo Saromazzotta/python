@@ -26,23 +26,29 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Under</th>
+                    <th scope="col">Under 30 Minutes</th>
                     <th scope="col">Posted By</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {% for recipe in recipes %}
+                {% for recipe in recipes %}
+                    <tr>
                         <td>{{ recipe.name }}</td>
-                        <td>{{ recipe.under_30 }}</td>
-                        <td>{{ recipe.session }}</td>
+                        <td>
+                            {% if recipe.under_30 == 1 %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td>{{ recipe.user_id }}</td>
                         <td>
                             <a href="">edit</a>
                             <a href="">delete</a>
                         </td>
-                </tr>
-                    {% endfor %}
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
