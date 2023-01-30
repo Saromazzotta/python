@@ -45,22 +45,29 @@ class Recipe:
 
     @classmethod
     def get_one(cls, data):
-        query = """
-        SELECT 
-            *
-        FROM 
-            recipes
-        WHERE
-            recipes.id = %(id)s
-        LEFT JOIN
-	        users
-        ON
-	        users.id = recipes.user_id
-        """
+        query = "SELECT * FROM recipes WHERE recipes.id = %(id)s;"
 
         results = connectToMySQL('recipes').query_db(query, data)
 
-        return cls(results[0]) if results else None
+        if not results:
+            return None
+        
+        one_recipe = Recipe(results[0])
+        recipes = []
+
+        for row_from_db in results:
+            user_data = {
+                "id": row_from_db['id'],
+                "first_name": row_from_db['first_name'],
+                "last_name": row_from_db['last_name'],
+                "email": row_from_db['email'],
+                "password": row_from_db['password'],
+                "created_at": row_from_db['created_at'],
+                "updated_at": row_from_db['updated_at'],
+            }
+            one_recipe.user = user.User(user_data)
+            recipes.append(one_recipe)
+        return recipes
 
     @classmethod
     def get_all(cls):

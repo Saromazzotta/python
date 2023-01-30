@@ -16,6 +16,17 @@ def dashboard():
 
     return render_template("show_recipes.html", recipes=Recipe.get_all(), user=user.User.get_user_by_id(data))
 
+@app.route('/recipes/<int:recipe_id>')
+def recipe_card(recipe_id):
+
+    data = {
+        "id": recipe_id
+    }
+    user_id = {
+        "id": session['user_id']
+    }
+    return render_template("recipe_card.html", recipes=Recipe.get_one(data), user=user.User.get_user_by_id(user_id), all_users=user.User.get_all, all_recipes=Recipe.get_all())
+
 @app.route('/recipes/new')
 def add_recipe():
     return render_template("add_recipe.html")

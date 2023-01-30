@@ -44,7 +44,7 @@
                         </td>
                         <td>{{ recipe.user.first_name }}</td>
                         <td>
-                            <a href="">View Recipe</a>
+                            <a href="/recipes/{{ recipe.id }}">View Recipe</a>
                         </td>
                         <td>
                             {% if session['user_id'] == recipe.user_id %}  
