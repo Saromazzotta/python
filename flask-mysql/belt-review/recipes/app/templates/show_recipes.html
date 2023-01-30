@@ -44,8 +44,13 @@
                         </td>
                         <td>{{ recipe.user.first_name }}</td>
                         <td>
-                            <a href="">edit</a>
-                            <a href="">delete</a>
+                            <a href="">View Recipe</a>
+                        </td>
+                        <td>
+                            {% if session['user_id'] == recipe.user_id %}  
+                                <a href="">edit</a>
+                                <a href="">delete</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

@@ -43,24 +43,24 @@ class Recipe:
 
         return connectToMySQL('recipes').query_db(query, data)
 
-    # @classmethod
-    # def get_one(cls, data):
-    #     query = """
-    #     SELECT 
-    #         *
-    #     FROM 
-    #         recipes
-    #     WHERE
-    #         recipes.id = %(id)s
-    #     LEFT JOIN
-	#         users
-    #     ON
-	#         users.id = recipes.user_id
-    #     """
+    @classmethod
+    def get_one(cls, data):
+        query = """
+        SELECT 
+            *
+        FROM 
+            recipes
+        WHERE
+            recipes.id = %(id)s
+        LEFT JOIN
+	        users
+        ON
+	        users.id = recipes.user_id
+        """
 
-    #     results = connectToMySQL('recipes').query_db(query, data)
+        results = connectToMySQL('recipes').query_db(query, data)
 
-    #     return cls(results[0]) if results else None
+        return cls(results[0]) if results else None
 
     @classmethod
     def get_all(cls):

@@ -20,7 +20,7 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-        self.recipes = []
+        # self.recipes = []
 
     @staticmethod
     def validate_registration(user):
@@ -122,6 +122,8 @@ class User:
             users.append(cls(user))
         return users
     
+#reversed this method in the recipe class instead
+
     # @classmethod
     # def get_user_with_recipes(cls,data):
     #     query = """
