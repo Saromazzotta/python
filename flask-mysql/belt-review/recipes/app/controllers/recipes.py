@@ -1,18 +1,20 @@
 from app import app
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, flash
 from app.models.recipe import Recipe
+from app.models import user
 
 
+@app.route('/recipes')
+def dashboard():
 
+    if 'user_id' not in session:
+        return redirect('/')
 
+    data = {
+        "id": session['user_id']
+    }
 
-
-
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect("/")
+    return render_template("show_recipes.html", recipes=Recipe.get_all(), user=user.User.get_user_by_id(data))
 
 @app.route('/recipes/new')
 def add_recipe():
@@ -20,6 +22,11 @@ def add_recipe():
 
 @app.route('/recipes/add', methods=['POST'])
 def post_recipe():
+
+    if not Recipe.validate_recipe(request.form):
+        return redirect('/recipes/new')
+    
+
     data = {
         "name": request.form['name'],
         "description": request.form['description'],

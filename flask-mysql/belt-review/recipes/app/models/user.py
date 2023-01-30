@@ -1,5 +1,6 @@
 from app import app
 from app.config.mysqlconnection import connectToMySQL
+from app.models import recipe
 from flask import flash
 import re
 from flask_bcrypt import Bcrypt
@@ -94,7 +95,7 @@ class User:
         return cls(result[0]) if result else None
 
     @classmethod
-    def get_one(cls, data):
+    def get_user_by_id(cls, data):
         query = """
         SELECT 
             *
@@ -120,3 +121,34 @@ class User:
         for user in results:
             users.append(cls(user))
         return users
+    
+    # @classmethod
+    # def get_user_with_recipes(cls,data):
+    #     query = """
+    #     SELECT 
+	#         *
+    #     FROM
+	#         users
+    #     LEFT JOIN
+	#         recipes 
+    #     ON
+	#         recipes.user_id = users.id
+    #     WHERE
+    #         users.id = %(id)s
+    #     """
+    #     results = connectToMySQL('recipes').query_db(query,data)
+    #     user = cls(results[0]) if results else None
+    #     for row_from_db in results:
+    #         recipe_data = {
+    #             "id": row_from_db['recipes.id'],
+    #             "name": row_from_db['name'],
+    #             "description": row_from_db['description'],
+    #             "instructions": row_from_db['instructions'],
+    #             "date_made": row_from_db['date_made'],
+    #             "under_30": row_from_db['under_30'],
+    #             "created_at": row_from_db['recipes.created_at'],
+    #             "updated_at": row_from_db['recipes.updated_at'],
+    #             "user_id": row_from_db['user_id']
+    #         }
+    #         user.recipes.append(recipe.Recipe(recipe_data))
+    #     return user

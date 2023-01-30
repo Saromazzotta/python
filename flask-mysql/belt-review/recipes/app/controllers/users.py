@@ -11,7 +11,6 @@ def index():
 
 bcrypt = Bcrypt(app)
 
-
 @app.route('/register', methods=['POST'])
 def register():
 
@@ -33,19 +32,6 @@ def register():
     session['user_id'] = user_id
     return redirect("/recipes")
 
-@app.route('/recipes')
-def dashboard():
-
-    if 'user_id' not in session:
-        return redirect('/')
-    
-    data = {
-        "id": session['user_id']
-    }
-
-    all_recipes = Recipe.get_all()
-    return render_template("show_recipes.html", user=User.get_one(data), recipes=all_recipes)
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -66,5 +52,14 @@ def login():
     session['user_id'] = user_in_db.id
     # never render on a post!!!
     return redirect("/recipes")
+
+
+
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect("/")
 
 
