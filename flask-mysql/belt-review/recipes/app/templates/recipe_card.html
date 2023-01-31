@@ -22,25 +22,29 @@
 
         <div class="row">
             <div class="col-6">
-                <h1>{{ recipes.name }}</h1>
+                <h1>{{ recipe.name }}</h1>
             </div>
             <div class="col-6">
                 
                 <h2>
-                    Posted by: 
-                    
-                    {% for recipe in all_recipes %}
-                        {{ recipe.user.first_name }}
+                    Posted by: {{ recipe.user.first_name}}
                 </h2>
-                    {% endfor %}
+
             </div>
         </div>
 
         <ul>
-            <li>Description: {{ recipes.description }}</li>
-            <li>Under 30 Minutes?: {{ recipes.under_30 }}</li>
-            <li>Instructions: {{ recipes.instructions }}</li>
-            <li>Date Made: {{ recipes.date_made }}</li>
+            <li>Description: {{ recipe.description }}</li>
+            <li>
+                Under 30 Minutes?
+                {% if recipe.under_30 == 1 %}
+                Yes
+                {% else %}
+                No
+                {% endif %}
+            </li>
+            <li>Instructions: {{ recipe.instructions }}</li>
+            <li>Date Made: {{ recipe.date_made }}</li>
         </ul>
 
     </div>

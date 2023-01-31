@@ -44,16 +44,16 @@ class Recipe:
         return connectToMySQL('recipes').query_db(query, data)
 
     @classmethod
-    def get_one(cls, data):
-        query = "SELECT * FROM recipes WHERE recipes.id = %(id)s;"
+    def get_recipe_with_user(cls, data):
+        query = "SELECT * FROM recipes JOIN users ON recipes.user_id = users.id WHERE recipes.id = %(id)s;"
 
         results = connectToMySQL('recipes').query_db(query, data)
 
-        if not results:
-            return None
+        # if not results:
+        #     return None
         
-        one_recipe = Recipe(results[0])
-        recipes = []
+        one_recipe = cls(results[0])
+        print(one_recipe)
 
         for row_from_db in results:
             user_data = {
@@ -63,11 +63,18 @@ class Recipe:
                 "email": row_from_db['email'],
                 "password": row_from_db['password'],
                 "created_at": row_from_db['created_at'],
-                "updated_at": row_from_db['updated_at'],
+                "updated_at": row_from_db['updated_at']
             }
-            one_recipe.user = user.User(user_data)
-            recipes.append(one_recipe)
-        return recipes
+        one_recipe.user = user.User(user_data)
+        return one_recipe
+    
+    @classmethod
+    def get_one(cls, data):
+        query = "SELECT * FROM recipes WHERE recipes.id = %(id)s;"
+
+        results = connectToMySQL('recipes').query_db(query,data)
+
+        return cls(results[0]) if results else None
 
     @classmethod
     def get_all(cls):
