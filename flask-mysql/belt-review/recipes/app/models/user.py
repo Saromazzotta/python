@@ -30,16 +30,12 @@ class User:
             flash("Email already taken", "register")
             is_valid = False
 
-        if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address!")
-            is_valid = False
-
         if len(user['password']) < 8:
-            flash("Password must be at least 8 characters.")
+            flash("Password must be at least 8 characters.", "register")
             is_valid = False
 
         if user['password'] != user['confirm_password']:
-            flash("Passwords must match.")
+            flash("Passwords must match.", "register")
             is_valid = False
 
         if len(user['first_name']) == 0:
@@ -48,6 +44,16 @@ class User:
 
         if len(user['last_name']) == 0:
             flash("Enter a last name", "register")
+            is_valid = False
+
+        return is_valid
+    
+    @staticmethod
+    def validate_login(user):
+        is_valid = True
+
+        if not EMAIL_REGEX.match(user['email']):
+            flash("Invalid email address!", "login")
             is_valid = False
 
         return is_valid
@@ -85,7 +91,6 @@ class User:
             *
         FROM 
             users
-
         WHERE 
             email = %(email)s
         """

@@ -116,11 +116,11 @@ class Recipe:
             flash("Instructions must be at least 3 characters.")
             is_valid = False
 
-        if (recipe['date_made']) == None:
+        if not recipe['date_made']:
             flash("Must choose a date.")
             is_valid = False
 
-        if (recipe['under_30']) == None:
+        if not recipe ['under_30']:
             flash("Must choose a selection.")
             is_valid = False
 

@@ -57,5 +57,12 @@ def post_recipe():
 
     return redirect('/recipes')
 
-# @app.route('/recipes/delete')
-# def recipe_delete():
+@app.route('/recipes/delete/<int:recipe_id>')
+def recipe_delete(recipe_id):
+
+    data = {
+        'id': recipe_id
+
+    }
+    Recipe.delete(data)
+    return redirect('/recipes')
