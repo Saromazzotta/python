@@ -1,3 +1,10 @@
 {{ 'SELECTED' if item.is_magical == 0 else '' }}
 
 <!-- use with select form -->
+
+
+
+                    <select name="under_30">
+                        <option value="0">{{ 'SELECTED' if recipe.under_30 == 0 else '' }}</option>
+                        <option value="0">{{ 'SELECTED' if recipe.under_30 else '' }}</option>
+                    </select>

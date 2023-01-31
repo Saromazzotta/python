@@ -9,7 +9,7 @@ bcrypt = Bcrypt(app)
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
-
+db = 'recipes'
 class User:
     def __init__(self, data):
         self.id = data['id']
@@ -53,7 +53,7 @@ class User:
         is_valid = True
 
         if not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address!", "login")
+            flash("Invalid email/password!", "login")
             is_valid = False
 
         return is_valid
@@ -64,7 +64,7 @@ class User:
         INSERT INTO users (first_name, last_name, email, password)
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s)
         """
-        return connectToMySQL('recipes').query_db(query, data)
+        return connectToMySQL(db).query_db(query, data)
 
     @classmethod
     def update(cls, data):
@@ -74,7 +74,7 @@ class User:
         WHERE id = %(id)s;
         """
 
-        return connectToMySQL('recipes').query_db(query, data)
+        return connectToMySQL(db).query_db(query, data)
 
     @classmethod
     def delete(cls, data):
@@ -82,7 +82,7 @@ class User:
         DELETE FROM users WHERE id = %(id)s;
         """
 
-        return connectToMySQL('recipes').query_db(query, data)
+        return connectToMySQL(db).query_db(query, data)
 
     @classmethod
     def get_by_email(cls, data):
@@ -95,7 +95,7 @@ class User:
             email = %(email)s
         """
 
-        result = connectToMySQL('recipes').query_db(query, data)
+        result = connectToMySQL(db).query_db(query, data)
 
         return cls(result[0]) if result else None
 
@@ -111,7 +111,7 @@ class User:
             id = %(id)s;
         """
 
-        results = connectToMySQL('recipes').query_db(query, data)
+        results = connectToMySQL(db).query_db(query, data)
 
         return cls(results[0]) if results else None
 
@@ -119,7 +119,7 @@ class User:
     def get_all(cls):
         query = "SELECT * FROM users;"
 
-        results = connectToMySQL('recipes').query_db(query)
+        results = connectToMySQL(db).query_db(query)
 
         users = []
 

@@ -39,8 +39,8 @@ def add_recipe():
 @app.route('/recipes/add', methods=['POST'])
 def post_recipe():
 
-    if not Recipe.validate_recipe(request.form):
-        return redirect('/recipes/new')
+    # if not Recipe.validate_recipe(request.form):
+    #     return redirect('/recipes/new')
     
 
     data = {
@@ -52,7 +52,7 @@ def post_recipe():
         "user_id": session['user_id']
     }
 
-
+    print("*" * 50, data)
     Recipe.save(data)
 
     return redirect('/recipes')
@@ -65,4 +65,35 @@ def recipe_delete(recipe_id):
 
     }
     Recipe.delete(data)
+    return redirect('/recipes')
+
+
+@app.route('/recipes/edit/<int:recipe_id>')
+def edit_page(recipe_id):
+    
+
+    data = {
+        'id': recipe_id
+    }
+    return render_template("edit.html", recipe=Recipe.get_one(data))
+
+
+
+@app.route('/recipes/<int:recipe_id>/update', methods=['POST'])
+def recipe_edit(recipe_id):
+
+    if not Recipe.validate_recipe(request.form):
+        return redirect(f'/recipes/edit/{recipe_id}')
+    
+    data = {
+        'id': recipe_id,
+        'name': request.form['name'],
+        'description': request.form['description'],
+        'instructions': request.form['instructions'],
+        'date_made': request.form['date_made'],
+        'under_30': request.form['under_30']
+    }
+
+    print(data, "*" * 50)
+    Recipe.update(data)
     return redirect('/recipes')
